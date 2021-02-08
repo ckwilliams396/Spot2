@@ -1,12 +1,14 @@
 class gameBoard{
     boardSize = 7;
+    board;
     player = Object.freeze(player = {
         PLAYER_ONE: "playerOne",
         PLAYER_TWO: "playerTwo",
         EMPTY: "empty"
     });
+
     constructor(){
-        let board = new Array();
+        board = new Array();
         for(i=0; i<this.boardSize; i++){
             board[i] = new Array();
         }
@@ -23,6 +25,18 @@ class gameBoard{
         }
     }
 
+    hasWinner(){
+        let emptyCount = 0;
+        for(i=0; i<this.boardSize; i++){
+            for (j=0; i<this.boardSize; j++){
+                if(board[i][j].player == this.player.EMPTY){
+                    emptyCount++
+                }
+            }
+        }
+        return emptyCount == 0;
+    }
+
     isValidMove(fromX, fromY, toX, toY){
         let deltaX = Math.abs(toX - fromX);
         let deltaY = Math.abs(toY - fromY);
@@ -31,6 +45,13 @@ class gameBoard{
         }
         else{
             return false;
+        }
+    }
+
+    moveToken(fromX, fromY, toX, toY){
+        let currentPlayer = this.board[fromX][fromY].player;
+        if(this.isValidMove(fromX, fromY, toX, toY)){
+            this.board[toX][toY].setPlayer(currentPlayer);
         }
     }
 }
