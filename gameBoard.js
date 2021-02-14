@@ -1,25 +1,25 @@
 class gameBoard{
     boardSize = 7;
-    board;
-    player = Object.freeze(player = {
+    static player = Object.freeze({
         PLAYER_ONE: "playerOne",
         PLAYER_TWO: "playerTwo",
         EMPTY: "empty"
     });
+    board;
 
     constructor(){
-        board = new Array();
-        for(i=0; i<this.boardSize; i++){
-            board[i] = new Array();
+        this.board = new Array();
+        for(let i=0; i<this.boardSize; i++){
+            this.board[i] = new Array();
         }
-        for(i=0; i<this.boardSize; i++){
-            for(j=0; j<this.boardSize; j++){
+        for(let i=0; i<this.boardSize; i++){
+            for(let j=0; j<this.boardSize; j++){
                 if((i==0 && j==0)  || (i==this.boardSize-1 && j==this.boardSize-1)){
-                    board[i][j] = new Token(player.PLAYER_ONE);
+                    this.board[i][j] = new Token(gameBoard.player.PLAYER_ONE);
                 }else if((i==0 && j==this.boardSize-1)  || (i ==this.boardSize-1 && j==0)){
-                    board[i][j] = new Token(player.PLAYER_TWO);
+                    this.board[i][j] = new Token(gameBoard.player.PLAYER_TWO);
                 }else{
-                    board[i][j] = new Token(player.EMPTY);
+                    this.board[i][j] = new Token(gameBoard.player.EMPTY);
                 }
             }
         }
@@ -27,8 +27,8 @@ class gameBoard{
 
     hasWinner(){
         let emptyCount = 0;
-        for(i=0; i<this.boardSize; i++){
-            for (j=0; i<this.boardSize; j++){
+        for(let i=0; i<this.boardSize; i++){
+            for (let j=0; i<this.boardSize; j++){
                 if(board[i][j].player == this.player.EMPTY){
                     emptyCount++
                 }
