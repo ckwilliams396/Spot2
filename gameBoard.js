@@ -52,6 +52,8 @@ class gameBoard{
         let currentPlayer = this.board[fromX][fromY].player;
         if(this.isValidMove(fromX, fromY, toX, toY)){
             this.board[toX][toY].setPlayer(currentPlayer);
+        }else{
+            console.log("invalid move");
         }
     }
 }

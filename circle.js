@@ -15,8 +15,7 @@ class circle{
     }
 
     draw(context, player){
-        console.log("X: " + this.x);
-        console.log("y: " + this.y);
+        context.lineWidth = 1;
         context.beginPath();
         context.arc(this.x,this.y,this.radius, 0, 2* Math.PI);
         context.stroke();
@@ -27,7 +26,16 @@ class circle{
             context.fillStyle = "blue";
             context.fill();
         }else{
+            context.fillStyle = "white";
+            context.fill();
             context.stroke();
         }
+    }
+
+    drawSelected(context){
+        context.lineWidth = 3;
+        context.beginPath();
+        context.arc(this.x,this.y,this.radius, 0, 2* Math.PI);
+        context.stroke(); 
     }
 }
