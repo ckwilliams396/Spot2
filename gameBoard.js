@@ -41,7 +41,7 @@ class gameBoard{
     isValidMove(fromX, fromY, toX, toY){
         let deltaX = Math.abs(toX - fromX);
         let deltaY = Math.abs(toY - fromY);
-        return deltaX + deltaY <= 3 && (deltaX <= 2 && deltaY <= 2) && this.board[toX][toY].getPlayer() == gameBoard.player.EMPTY;
+        return deltaX + deltaY <= 4 && (deltaX <= 2 && deltaY <= 2) && this.board[toX][toY].getPlayer() == gameBoard.player.EMPTY;
     }
 
     isSkipMove(fromX, fromY, toX, toY){
