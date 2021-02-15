@@ -20,7 +20,7 @@ class circle{
         context.arc(this.x,this.y,this.radius, 0, 2* Math.PI);
         context.stroke();
         if(player == gameBoard.player.PLAYER_ONE){
-            context.fillStyle = 'orange';
+            context.fillStyle = "orange";
             context.fill();
         }else if(player == gameBoard.player.PLAYER_TWO){
             context.fillStyle = "blue";

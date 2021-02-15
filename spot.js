@@ -22,6 +22,7 @@ canvas.addEventListener("click", function(event){
                    fromX = i;
                    fromY = j;
                }else{
+                   //implement logic to prevent peices being changed from same place clicking
                    if(currentPlayer != gameBoard.player.EMPTY){
                         game.moveToken(fromX,fromY,i,j);
                    }
