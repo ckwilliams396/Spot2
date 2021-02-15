@@ -43,6 +43,7 @@ class gameBoard{
             this.board[toX][toY].setPlayer(currentPlayer);
             isSkipMove && this.board[fromX][fromY].setPlayer(gameBoard.player.EMPTY);
             this.claim(toX,toY, currentPlayer);
+            this.playerTurn
         } else {
             console.log("invalid move");
         }
