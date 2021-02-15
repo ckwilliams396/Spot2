@@ -51,16 +51,34 @@ class gameBoard{
 
 
     moveToken(fromX, fromY, toX, toY){
-        let currentPlayer = this.board[fromX][fromY].player;
+        let currentPlayer = this.board[fromX][fromY].getPlayer();
         if(this.isValidMove(fromX, fromY, toX, toY)){
             this.board[toX][toY].setPlayer(currentPlayer);
             if(this.isSkipMove(fromX, fromY, toX, toY)){
-                this.board[fromX][fromY].setPlayer(gameBoard.EMPTY);
+                this.board[fromX][fromY].setPlayer(gameBoard.player.EMPTY);
             }
+            this.claim(toX,toY, currentPlayer);
         }else{
             console.log("invalid move");
         }
     }
+
+    claim(x, y, currentPlayer){
+        let minX = (x == 0? 0 : x - 1); 
+        let maxX = (x == this.boardSize-1? x : x + 1);
+        let minY = (y == 0 ? 0 : y - 1);
+        let maxY = (y == this.boardSize-1? y : y + 1);
+
+        for(i = minX; i <= maxX; i++){
+            for(j = minY; j <= maxY; j++){
+                if(this.board[i][j].getPlayer() != gameBoard.player.EMPTY){
+                    this.board[i][j].setPlayer(currentPlayer);
+                }
+            }
+        }
+    }
+
+
 }
 
 
