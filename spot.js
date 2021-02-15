@@ -32,7 +32,6 @@ canvas.addEventListener("click", function(event){
                    drawBoard();
                    setTurn();
                }
-               
            }
         } 
     }

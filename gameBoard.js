@@ -64,6 +64,17 @@ class gameBoard{
         }
     }
 
+    changeTurn(player){
+        if(player == gameBoard.player.PLAYER_ONE){
+            return gameBoard.player.PLAYER_TWO;
+        }else if(player == gameBoard.player.PLAYER_TWO){
+            return gameBoard.player.PLAYER_ONE;
+        }
+    }
+
+    getTurn(){
+        return this.playerTurn;
+    }
 
 }
 
