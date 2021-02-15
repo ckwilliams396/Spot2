@@ -30,6 +30,7 @@ canvas.addEventListener("click", function(event){
                    fromX = null;
                    fromY = null;
                    drawBoard();
+                   setTurn();
                }
                
            }
@@ -37,9 +38,14 @@ canvas.addEventListener("click", function(event){
     }
 });
 
+function setTurn(){
+    turn = game.getTurn();
+    document.getElementById("turn").innerHTML = "Player's turn: " + (turn == gameBoard.player.PLAYER_ONE? "orange" : "blue");
+}
 for(i=0; i<game.boardSize; i++){
     circles[i] = new Array();
 }
+
 function drawBoard(){
     for(i=0; i<circles.length; i++){
         for(j=0; j<circles.length; j++){

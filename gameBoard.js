@@ -6,6 +6,7 @@ class gameBoard{
         EMPTY: "empty"
     });
     board;
+    playerTurn = gameBoard.player.PLAYER_ONE;
 
     constructor(){
         this.board = new Array();
@@ -40,7 +41,7 @@ class gameBoard{
     isValidMove(fromX, fromY, toX, toY){
         let deltaX = Math.abs(toX - fromX);
         let deltaY = Math.abs(toY - fromY);
-        return deltaX + deltaY <= 3 && (deltaX <= 2 && deltaY <= 2);
+        return deltaX + deltaY <= 3 && (deltaX <= 2 && deltaY <= 2) && this.board[toX][toY].getPlayer() == gameBoard.player.EMPTY;
     }
 
     isSkipMove(fromX, fromY, toX, toY){
@@ -52,14 +53,19 @@ class gameBoard{
 
     moveToken(fromX, fromY, toX, toY){
         let currentPlayer = this.board[fromX][fromY].getPlayer();
-        if(this.isValidMove(fromX, fromY, toX, toY)){
-            this.board[toX][toY].setPlayer(currentPlayer);
-            if(this.isSkipMove(fromX, fromY, toX, toY)){
-                this.board[fromX][fromY].setPlayer(gameBoard.player.EMPTY);
+        if(currentPlayer == this.playerTurn){
+            if(this.isValidMove(fromX, fromY, toX, toY)){
+                this.board[toX][toY].setPlayer(currentPlayer);
+                if(this.isSkipMove(fromX, fromY, toX, toY)){
+                    this.board[fromX][fromY].setPlayer(gameBoard.player.EMPTY);
+                }
+                this.claim(toX,toY, currentPlayer);
+                this.playerTurn = this.changeTurn(this.playerTurn);
+            }else{
+                console.log("invalid move");
             }
-            this.claim(toX,toY, currentPlayer);
         }else{
-            console.log("invalid move");
+            console.log("Its not your turn...");
         }
     }
 
@@ -78,6 +84,17 @@ class gameBoard{
         }
     }
 
+    changeTurn(player){
+        if(player == gameBoard.player.PLAYER_ONE){
+            return gameBoard.player.PLAYER_TWO;
+        }else if(player == gameBoard.player.PLAYER_TWO){
+            return gameBoard.player.PLAYER_ONE;
+        }
+    }
+
+    getTurn(){
+        return this.playerTurn;
+    }
 
 }
 
