@@ -9,39 +9,27 @@ class gameBoard{
     playerTurn = gameBoard.player.PLAYER_ONE;
 
     constructor(){
-        this.board = new Array();
-        for(let i=0; i<this.boardSize; i++){
-            this.board[i] = new Array();
-        }
-        for(let i=0; i<this.boardSize; i++){
-            for(let j=0; j<this.boardSize; j++){
-                if((i==0 && j==0)  || (i==this.boardSize-1 && j==this.boardSize-1)){
-                    this.board[i][j] = new Token(gameBoard.player.PLAYER_ONE);
-                }else if((i==0 && j==this.boardSize-1)  || (i ==this.boardSize-1 && j==0)){
-                    this.board[i][j] = new Token(gameBoard.player.PLAYER_TWO);
-                }else{
-                    this.board[i][j] = new Token(gameBoard.player.EMPTY);
-                }
-            }
-        }
+        this.board = new Array(this.boardSize).fill(new Array(this.boardSize).fill(new Token(gameBoard.player.EMPTY)))
+        this.board[0][0].setPlayer(player.PLAYER_ONE)
+        this.board[this.boardSize-1][this.boardSize-1].setPlayer(player.PLAYER_ONE)
+        this.board[0][this.boardSize-1].setPlayer(player.PLAYER_TWO)
+        this.board[this.boardSize-1][0].setPlayer(player.PLAYER_TWO)
     }
 
     hasWinner(){
         let emptyCount = 0;
         for(let i=0; i<this.boardSize; i++){
             for (let j=0; i<this.boardSize; j++){
-                if(board[i][j].player == this.player.EMPTY){
-                    emptyCount++
-                }
+                if(board[i][j].player == this.player.EMPTY) return false;
             }
         }
-        return emptyCount == 0;
+        return true;
     }
 
     isValidMove(fromX, fromY, toX, toY){
         let deltaX = Math.abs(toX - fromX);
         let deltaY = Math.abs(toY - fromY);
-        return deltaX + deltaY <= 3 && (deltaX <= 2 && deltaY <= 2) && this.board[toX][toY].getPlayer() == gameBoard.player.EMPTY;
+        return deltaX + deltaY <= 3 && (deltaX <= 2 && deltaY <= 2);
     }
 
     isSkipMove(fromX, fromY, toX, toY){
@@ -53,19 +41,14 @@ class gameBoard{
 
     moveToken(fromX, fromY, toX, toY){
         let currentPlayer = this.board[fromX][fromY].getPlayer();
-        if(currentPlayer == this.playerTurn){
-            if(this.isValidMove(fromX, fromY, toX, toY)){
-                this.board[toX][toY].setPlayer(currentPlayer);
-                if(this.isSkipMove(fromX, fromY, toX, toY)){
-                    this.board[fromX][fromY].setPlayer(gameBoard.player.EMPTY);
-                }
-                this.claim(toX,toY, currentPlayer);
-                this.playerTurn = this.changeTurn(this.playerTurn);
-            }else{
-                console.log("invalid move");
+        if(this.isValidMove(fromX, fromY, toX, toY)){
+            this.board[toX][toY].setPlayer(currentPlayer);
+            if(this.isSkipMove(fromX, fromY, toX, toY)){
+                this.board[fromX][fromY].setPlayer(gameBoard.player.EMPTY);
             }
+            this.claim(toX,toY, currentPlayer);
         }else{
-            console.log("Its not your turn...");
+            console.log("invalid move");
         }
     }
 
@@ -84,17 +67,6 @@ class gameBoard{
         }
     }
 
-    changeTurn(player){
-        if(player == gameBoard.player.PLAYER_ONE){
-            return gameBoard.player.PLAYER_TWO;
-        }else if(player == gameBoard.player.PLAYER_TWO){
-            return gameBoard.player.PLAYER_ONE;
-        }
-    }
-
-    getTurn(){
-        return this.playerTurn;
-    }
 
 }
 
