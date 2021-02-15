@@ -17,10 +17,8 @@ canvas.addEventListener("click", function(event){
         for(let j = 0; j< game.boardSize; j++){
            if(circles[i][j].contains(x,y)){
                if(currentPlayer == null){
-                   console.log("calling draw selsected");
                    circles[i][j].drawSelected(context);
-                   currentPlayer = game.board[i][j].player;
-                   console.log(currentPlayer);
+                   currentPlayer = game.board[i][j].getPlayer();
                    fromX = i;
                    fromY = j;
                }else{
@@ -44,7 +42,7 @@ for(i=0; i<game.boardSize; i++){
 function drawBoard(){
     for(i=0; i<circles.length; i++){
         for(j=0; j<circles.length; j++){
-            let player = game.board[i][j].player;
+            let player = game.board[i][j].getPlayer();
             circles[i][j] = new circle(radius, (i * gridSize) + radius, (j * gridSize) + radius);
             circles[i][j].draw(context, player);
         }
