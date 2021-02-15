@@ -8,5 +8,9 @@ class Token{
     setPlayer(player){
         this.player = player;
     }
+
+    getPlayer(){
+        return this.player;
+    }
     
 }

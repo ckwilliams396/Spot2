@@ -40,18 +40,23 @@ class gameBoard{
     isValidMove(fromX, fromY, toX, toY){
         let deltaX = Math.abs(toX - fromX);
         let deltaY = Math.abs(toY - fromY);
-        if(deltaX + deltaY <= 3 && (deltaX <= 2 && deltaY <= 2)){
-            return true;
-        }
-        else{
-            return false;
-        }
+        return deltaX + deltaY <= 3 && (deltaX <= 2 && deltaY <= 2);
     }
+
+    isSkipMove(fromX, fromY, toX, toY){
+        let deltaX = Math.abs(toX - fromX);
+        let deltaY = Math.abs(toY - fromY);
+        return deltaX == 2 || deltaY == 2;
+    }
+
 
     moveToken(fromX, fromY, toX, toY){
         let currentPlayer = this.board[fromX][fromY].player;
         if(this.isValidMove(fromX, fromY, toX, toY)){
             this.board[toX][toY].setPlayer(currentPlayer);
+            if(this.isSkipMove(fromX, fromY, toX, toY)){
+                this.board[fromX][fromY].setPlayer(gameBoard.EMPTY);
+            }
         }else{
             console.log("invalid move");
         }
