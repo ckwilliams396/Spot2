@@ -29,13 +29,15 @@ canvas.addEventListener("click", function(event){
                    fromX = null;
                    fromY = null;
                    drawBoard();
-                   let winner = game.hasWinner()
                    displayTurn();
                    displayScore();
                }
-               
+               break;
            }
         } 
+    }
+    if(game.hasWinner()){
+        alert("winner!");
     }
 });
 
@@ -45,6 +47,7 @@ function displayTurn(){
 }
 
 function displayScore(){
+    game.countTokens()
     let playerOneScore = game.getPlayerCount(gameBoard.player.PLAYER_ONE);
     let playerTwoScore = game.getPlayerCount(gameBoard.player.PLAYER_TWO);
     document.getElementById("score").innerHTML = "Orange: " + playerOneScore + " Blue: " + playerTwoScore;
