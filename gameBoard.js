@@ -1,5 +1,8 @@
 class gameBoard{
     boardSize = 7;
+    playerOneCount = 2;
+    playerTwoCount = 2;
+    emptyCount;
     static player = Object.freeze({
         PLAYER_ONE: "playerOne",
         PLAYER_TWO: "playerTwo",
@@ -27,15 +30,7 @@ class gameBoard{
     }
 
     hasWinner(){
-        let emptyCount = 0;
-        for(let i=0; i<this.boardSize; i++){
-            for (let j=0; i<this.boardSize; j++){
-                if(board[i][j].player == this.player.EMPTY){
-                    emptyCount++
-                }
-            }
-        }
-        return emptyCount == 0;
+        return this.emptyCount == 0 || this.playerOneCount == 0 || this.playerTwoCount == 0;
     }
 
     isValidMove(fromX, fromY, toX, toY){
@@ -94,6 +89,42 @@ class gameBoard{
 
     getTurn(){
         return this.playerTurn;
+    }
+
+    setPlayerCount(player, count){
+        if(player == gameBoard.player.PLAYER_ONE){
+            this.playerOneCount = count;
+        }else if(player == gameBoard.player.PLAYER_TWO){
+            this.playerTwoCount = count;
+        }else{
+            this.emptyCount = count;
+        }
+    }
+    getPlayerCount(player){
+        return player == gameBoard.player.PLAYER_ONE ? this.playerOneCount : this.playerTwoCount;
+    }
+
+    countTokens(){
+        let emptyCount = 0;
+        let playerOne = 0;
+        let playerTwo = 0;
+        for(let i=0; i<this.boardSize; i++){
+            for (let j=0; j<this.boardSize; j++){
+                console.log(i+","+j);
+                let currentPlayer = this.board[i][j].getPlayer();
+                console.log(currentPlayer);
+                if(currentPlayer == gameBoard.player.PLAYER_ONE){
+                    playerOne++;
+                }else if(currentPlayer == gameBoard.player.PLAYER_TWO){
+                    playerTwo++;
+                }else{
+                    emptyCount++;
+                }
+            }
+        }
+        this.setPlayerCount(gameBoard.player.PLAYER_ONE, playerOne);
+        this.setPlayerCount(gameBoard.player.PLAYER_TWO, playerTwo);
+        this.setPlayerCount(gameBoard.player.EMPTY, emptyCount);
     }
 
 }

@@ -22,7 +22,6 @@ canvas.addEventListener("click", function(event){
                    fromX = i;
                    fromY = j;
                }else{
-                   //implement logic to prevent peices being changed from same place clicking
                    if(currentPlayer != gameBoard.player.EMPTY){
                         game.moveToken(fromX,fromY,i,j);
                    }
@@ -30,17 +29,28 @@ canvas.addEventListener("click", function(event){
                    fromX = null;
                    fromY = null;
                    drawBoard();
-                   setTurn();
+                   displayTurn();
+                   displayScore();
                }
-               
+               break;
            }
         } 
     }
+    if(game.hasWinner()){
+        alert("winner!");
+    }
 });
 
-function setTurn(){
+function displayTurn(){
     turn = game.getTurn();
     document.getElementById("turn").innerHTML = "Player's turn: " + (turn == gameBoard.player.PLAYER_ONE? "orange" : "blue");
+}
+
+function displayScore(){
+    game.countTokens()
+    let playerOneScore = game.getPlayerCount(gameBoard.player.PLAYER_ONE);
+    let playerTwoScore = game.getPlayerCount(gameBoard.player.PLAYER_TWO);
+    document.getElementById("score").innerHTML = "Orange: " + playerOneScore + " Blue: " + playerTwoScore;
 }
 for(i=0; i<game.boardSize; i++){
     circles[i] = new Array();
