@@ -70,8 +70,8 @@ class gameBoard{
         let minY = (y == 0 ? 0 : y - 1);
         let maxY = (y == this.boardSize-1? y : y + 1);
 
-        for(i = minX; i <= maxX; i++){
-            for(j = minY; j <= maxY; j++){
+        for(let i = minX; i <= maxX; i++){
+            for(let j = minY; j <= maxY; j++){
                 if(this.board[i][j].getPlayer() != gameBoard.player.EMPTY){
                     this.board[i][j].setPlayer(currentPlayer);
                 }
@@ -110,9 +110,7 @@ class gameBoard{
         let playerTwo = 0;
         for(let i=0; i<this.boardSize; i++){
             for (let j=0; j<this.boardSize; j++){
-                console.log(i+","+j);
                 let currentPlayer = this.board[i][j].getPlayer();
-                console.log(currentPlayer);
                 if(currentPlayer == gameBoard.player.PLAYER_ONE){
                     playerOne++;
                 }else if(currentPlayer == gameBoard.player.PLAYER_TWO){
@@ -127,7 +125,42 @@ class gameBoard{
         this.setPlayerCount(gameBoard.player.EMPTY, emptyCount);
     }
 
+
+    evaluteBoard() {
+        return this.playerTwoCount - this.playerOneCount;
+    }
+
+    generateMoves(player){
+        let moves = [];
+        for(let x=0; x < this.boardSize; x++){
+            for(let y=0; y< this.boardSize; y++){
+                if(this.board[x][y].getPlayer() == player){
+                    let minX = x<2 ? 0 : x-2;
+                    let maxX = x>this.boardSize-3 ? this.boardSize-1 : x+2;
+                    let minY = y<2 ? 0 : y-2;
+                    let maxY = y>this.boardSize-3 ? this.boardSize-1 : y+2;
+                    for(let i=minX; i<=maxX; i++){
+                        for(let j=minY; j<=maxY; j++){
+                            if(this.isValidMove(x,y,i,j)){
+                                moves.push({fromX: x, fromY: y, toX: i, toY: j});
+                            }
+                        }
+                    }
+                }
+
+            }
+        }
+        return moves;
+    } 
+
+    printMoves(moves) {
+        console.log(moves);        
+    }
+
+    computerMove(){
+        possibleMoves = generateMoves(gameboard.player.PLAYER_TWO);
+        //objects are passed by value meaning that objects should be copied when passed into a function hopefully achieving what I would like to accomplish
+    }
+
+
 }
-
-
-
