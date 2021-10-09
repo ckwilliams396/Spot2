@@ -8,6 +8,49 @@ var currentPlayer;
 var fromX;
 var fromY;
 
+function  minimax(board, depth, maxPlayer, sum, move) {
+    console.log("starting minimax: " + board.getTurn());
+    if(move != null){
+        board.moveToken(move.fromX, move.fromY, move.toX, move.toY);
+        sum = sum + board.evaluteBoard();
+    }
+
+    console.log(board);
+    if(depth === 0) {
+        return [null, sum];
+    }
+
+    let possibleMoves = board.generateMoves(maxPlayer);
+                
+    let max = Number.NEGATIVE_INFINITY;
+    let min = Number.POSITIVE_INFINITY;
+    var bestMove;
+    for(let i=0; i<possibleMoves.length; i++){
+        let currentMove = possibleMoves[i];
+        sum = sum + board.evaluteBoard();
+        var [childBestMove, childValue] = minimax(board, depth -1, board.getTurn(), sum, currentMove)
+
+
+        if(maxPlayer == gameBoard.player.PLAYER_TWO){
+            if(childValue > max){
+                max = childValue;
+                bestMove = currentMove;
+            }
+        }
+        else{
+            if(childValue < min){
+                min = childValue;
+                bestMove = currentMove;
+            }
+        }
+    }
+    if(maxPlayer == gameBoard.player.PLAYER_TWO){
+        return [bestMove, max];
+    }else{
+        return [bestMove, min];
+    }
+}
+
 
 canvas.addEventListener("click", function(event){
     let rect = canvas.getBoundingClientRect();
@@ -67,4 +110,5 @@ function drawBoard(){
 }
 
 drawBoard();
+console.log(minimax(game, 1, gameBoard.player.PLAYER_TWO, 0, null))
   
